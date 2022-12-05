@@ -1,21 +1,43 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { useSelector, useDispatch } from "react-redux";
+import { deletePost } from "../redux/rootReducer";
 
-const Post = () => {
-    const [post, setPost] = useState('')
+export const Post = () => {
+    // const [post, setPost] = useState('')
     const params = useParams()
-    useEffect(() => {
-        let id = params.post_id
-        axios.get('https://jsonplaceholder.typicode.com/posts/' + id)
-            .then(res => setPost(res.data))
-            .catch(err => console.log(err.message));
-    })
+    const { posts } = useSelector((state) => state.posts)
+    const dispatch = useDispatch()
     
+    const post = posts.find((post) => {
+        let id = params.post_id
+        return post.id === id
+    })
+
+    // console.log(posts)
+
+    // useEffect(() => {
+    //     let id = params.post_id
+    //     axios.get('https://jsonplaceholder.typicode.com/posts/' + id)
+    //         .then(res => setPost(res.data))
+    //         .catch(err => console.log(err.message));
+    // })
+    
+    const handleClick = () => {
+        let id = params.post_id
+        dispatch(deletePost(id))
+    }
+
     const postList = post? (
         <div className="post">
             <h4 className="center">{post.title}</h4>
             <p>{post.body}</p>
+            <div className="center">
+                <button className="btn grey" onClick={handleClick}>
+                    Delete Post
+                </button>
+            </div>
         </div>
     ): (
         <div className="center">Loading post...</div>
