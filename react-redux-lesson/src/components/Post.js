@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import axios from "axios";
+// import { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+// import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { deletePost } from "../redux/rootReducer";
 
@@ -9,6 +9,7 @@ export const Post = () => {
     const params = useParams()
     const { posts } = useSelector((state) => state.posts)
     const dispatch = useDispatch()
+    const navigate = useNavigate()
     
     const post = posts.find((post) => {
         let id = params.post_id
@@ -27,6 +28,8 @@ export const Post = () => {
     const handleClick = () => {
         let id = params.post_id
         dispatch(deletePost(id))
+        setTimeout(() => navigate('/'), 400)
+        
     }
 
     const postList = post? (

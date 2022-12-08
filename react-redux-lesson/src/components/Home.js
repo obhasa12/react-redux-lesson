@@ -1,5 +1,5 @@
-import axios from "axios"
-import { useEffect, useState } from "react"
+// import axios from "axios"
+// import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import pokeball from '../pokeball.png'
 import { useSelector } from "react-redux"
